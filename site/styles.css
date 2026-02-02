@@ -1,185 +1,60 @@
-:root {
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --bg: #f8fafc;
-  --text: #0f172a;
-  --text-light: #64748b;
-  --card: #ffffff;
-  --border: #e2e8f0;
-  --accent: #10b981;
+const CONFIG = {
+  CALENDLY_URL: "https://calendly.com/unixgigi/15-minutes-meeting",
+  N8N_WEBHOOK: "https://lab.ai4u.it/webhook/luigi-contact"
+};
+
+// Calendly
+function openCalendly() {
+  if (window.Calendly) {
+    window.Calendly.initPopupWidget({ url: CONFIG.CALENDLY_URL });
+  } else {
+    window.open(CONFIG.CALENDLY_URL, '_blank');
+  }
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+document.getElementById("bookCallTop").addEventListener("click", openCalendly);
 
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+// Form Handling
+const contactForm = document.getElementById("contactForm");
+const status = document.getElementById("formStatus");
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = e.target.querySelector('button');
+  const formData = new FormData(contactForm);
+  const data = Object.fromEntries(formData.entries());
 
-/* Navbar */
-.navbar {
-  padding: 20px 0;
-  background: rgba(248, 250, 252, 0.8);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border);
-}
+  // Bot check
+  if (data.website) return;
 
-.nav-flex { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-weight: 800; font-size: 20px; letter-spacing: -1px; }
-.logo span { color: var(--primary); }
+  submitBtn.disabled = true;
+  status.textContent = "Sending your message...";
+  status.style.color = "var(--text)";
 
-.btn-nav {
-  background: var(--text);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  transition: 0.2s;
-}
+  try {
+    const response = await fetch(CONFIG.N8N_WEBHOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        source: "luigicopertino.it",
+        timestamp: new Date().toISOString()
+      }),
+    });
 
-.btn-nav:hover { background: var(--primary); }
-
-/* Hero Section */
-.hero { padding: 100px 0 80px; text-align: center; }
-
-.hero-badge {
-  display: inline-block;
-  padding: 6px 14px;
-  background: #dbeafe;
-  color: var(--primary-dark);
-  border-radius: 50px;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
-.hero-title {
-  font-size: clamp(40px, 8vw, 72px);
-  line-height: 1.1;
-  letter-spacing: -3px;
-  font-weight: 800;
-  margin-bottom: 24px;
-}
-
-.hero-title span {
-  background: linear-gradient(to right, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-subtitle {
-  font-size: 19px;
-  color: var(--text-light);
-  max-width: 650px;
-  margin: 0 auto 40px;
-}
-
-.hero-btns { display: flex; gap: 16px; justify-content: center; }
-
-/* Buttons */
-.btn-primary {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-  transition: 0.3s;
-}
-
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3); }
-
-.btn-secondary {
-  background: white;
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 16px 32px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 700;
-  transition: 0.2s;
-}
-
-/* Feature Cards */
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding: 60px 0; }
-
-.f-card {
-  background: white;
-  padding: 40px;
-  border-radius: 24px;
-  border: 1px solid var(--border);
-  transition: 0.3s;
-}
-
-.f-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-.f-icon { font-size: 32px; margin-bottom: 20px; }
-.f-card h3 { margin-bottom: 12px; font-size: 22px; }
-.f-card p { color: var(--text-light); }
-
-/* Calendar Section */
-.card-glass {
-  background: white;
-  border-radius: 32px;
-  padding: 60px 20px;
-  border: 1px solid var(--border);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.05);
-}
-
-.section-header { text-align: center; margin-bottom: 40px; }
-.section-header h2 { font-size: 42px; letter-spacing: -1.5px; margin-bottom: 12px; }
-
-/* Contact Form */
-.form-container { max-width: 600px; margin: 80px auto; }
-.modern-form { background: white; padding: 40px; border-radius: 24px; border: 1px solid var(--border); }
-.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-.group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-.group label { font-size: 14px; font-weight: 600; color: var(--text-light); }
-
-input, textarea {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #f1f5f9;
-  font-family: inherit;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-input:focus, textarea:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-
-.btn-submit {
-  width: 100%;
-  padding: 16px;
-  background: var(--text);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.form-status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .hero-title { font-size: 48px; letter-spacing: -2px; }
-  .input-grid { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; }
-  .navbar .btn-text { display: none; }
-}
+    if (response.ok) {
+      status.textContent = "Message sent! I'll be in touch soon.";
+      status.style.color = "var(--accent)";
+      contactForm.reset();
+      if (window.turnstile) window.turnstile.reset();
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    status.textContent = "Error sending message. Please try Calendly.";
+    status.style.color = "#ef4444";
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
