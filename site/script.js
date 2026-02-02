@@ -1,47 +1,60 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contactForm');
-  const status = document.getElementById('formStatus');
-  const WEBHOOK_URL = 'https://lab.ai4u.it/webhook/luigi-contact';
+const CONFIG = {
+  CALENDLY_URL: "https://calendly.com/unixgigi/15-minutes-meeting",
+  N8N_WEBHOOK: "https://lab.ai4u.it/webhook/luigi-contact"
+};
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Honeypot check
-    const hp = form.querySelector('[name="_hp"]').value;
-    if (hp) return; 
+// Calendly
+function openCalendly() {
+  if (window.Calendly) {
+    window.Calendly.initPopupWidget({ url: CONFIG.CALENDLY_URL });
+  } else {
+    window.open(CONFIG.CALENDLY_URL, '_blank');
+  }
+}
 
-    const btn = form.querySelector('button');
-    const originalText = btn.textContent;
-    
-    // UI Loading State
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    status.textContent = '';
-    status.style.color = 'inherit';
+document.getElementById("bookCallTop").addEventListener("click", openCalendly);
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+// Form Handling
+const contactForm = document.getElementById("contactForm");
+const status = document.getElementById("formStatus");
 
-    try {
-      const response = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = e.target.querySelector('button');
+  const formData = new FormData(contactForm);
+  const data = Object.fromEntries(formData.entries());
 
-      if (response.ok) {
-        form.reset();
-        status.style.color = '#059669'; // Success Green
-        status.textContent = 'Message sent! I will get back to you shortly.';
-      } else {
-        throw new Error('Failed');
-      }
-    } catch (err) {
-      status.style.color = '#DC2626'; // Error Red
-      status.textContent = 'Something went wrong. Please try again or book a call directly.';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = originalText;
+  // Bot check
+  if (data.website) return;
+
+  submitBtn.disabled = true;
+  status.textContent = "Sending your message...";
+  status.style.color = "var(--text)";
+
+  try {
+    const response = await fetch(CONFIG.N8N_WEBHOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        source: "luigicopertino.it",
+        timestamp: new Date().toISOString()
+      }),
+    });
+
+    if (response.ok) {
+      status.textContent = "Message sent! I'll be in touch soon.";
+      status.style.color = "var(--accent)";
+      contactForm.reset();
+      if (window.turnstile) window.turnstile.reset();
+    } else {
+      throw new Error();
     }
-  });
+  } catch (err) {
+    status.textContent = "Error sending message. Please try Calendly.";
+    status.style.color = "#ef4444";
+  } finally {
+    submitBtn.disabled = false;
+  }
 });
