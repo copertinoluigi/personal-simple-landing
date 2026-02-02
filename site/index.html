@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Luigi Copertino | Product Analytics & Ops Consultant</title>
-  <meta name="description" content="Operational excellence for mid-size companies. Optimize your data workflows and internal processes.">
   <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
@@ -15,94 +13,79 @@
   <nav class="navbar">
     <div class="container nav-flex">
       <div class="logo">LUIGI<span>COPERTINO</span></div>
-      <div class="nav-cta">
-        <a href="#contact" class="btn-nav-secondary">Contact</a>
-        <a href="#calendar" class="btn-nav-primary">Book Call</a>
+      <div class="nav-cta-group">
+        <a href="#contact" class="btn-nav secondary">Contact</a>
+        <a href="#calendar" class="btn-nav primary">Book Call</a>
       </div>
     </div>
   </nav>
 
-  <header class="hero">
-    <div class="container">
-      <div class="hero-badge">Available for Q2 2026</div>
-      <h1 class="hero-title">Optimize your <span>Product Operations</span> and Data Flow.</h1>
-      <p class="hero-subtitle">
-        I help mid-size companies automate reporting and build analytics systems that actually drive decisions. No fluff, just scalable infrastructure.
-      </p>
-      <div class="hero-btns">
-        <button class="btn-primary" id="bookCallTop">Book a 15-min Call</button>
-        <a href="#contact" class="btn-secondary">Send Message</a>
-      </div>
+  <header class="hero container">
+    <div class="hero-badge">Available for Q2 2026</div>
+    <h1 class="hero-title">Optimize your <span>Product Operations</span> and Data Flow.</h1>
+    <p class="hero-subtitle">I help mid-size companies automate reporting and build analytics systems that actually drive decisions. No fluff, just scalable infrastructure.</p>
+    <div class="hero-btns">
+      <button class="btn-main primary" id="bookCallTop">Book a 15-min Call</button>
+      <a href="#contact" class="btn-main white">Send Message</a>
     </div>
   </header>
 
-  <section class="features">
-    <div class="container">
-      <div class="grid-services">
-        <div class="f-card">
-          <div class="f-icon">📊</div>
-          <h3>Analytics & Reporting</h3>
-          <p>Dashboards that surface metrics that matter. Stop hunting through spreadsheets and get real-time insights.</p>
-        </div>
-        <div class="f-card">
-          <div class="f-icon">⚙️</div>
-          <h3>Operations Ops</h3>
-          <p>Streamline internal workflows and reduce manual overhead. Let your team focus on high-value tasks.</p>
-        </div>
-        <div class="f-card">
-          <div class="f-icon">🎧</div>
-          <h3>Support Efficiency</h3>
-          <p>Optimize Customer Support processes and tooling to improve response times and team productivity.</p>
-        </div>
-        <div class="f-card">
-          <div class="f-icon">🤖</div>
-          <h3>Process Automation</h3>
-          <p>Connect your entire stack (CRM, Product, Ops) via custom workflows for 100% data integrity.</p>
-        </div>
+  <section class="features container">
+    <div class="grid-services">
+      <div class="f-card">
+        <div class="f-icon">📊</div>
+        <h3>Analytics & Reporting</h3>
+        <p>Dashboards that surface metrics that matter. Stop hunting through spreadsheets.</p>
       </div>
-    </div>
-  </section>
-
-  <section id="calendar" class="calendar-section">
-    <div class="container">
-      <div class="card-glass">
-        <div class="section-header">
-          <h2>Ready to scale?</h2>
-          <p>Choose a time that works for you. No sales pitch, just a quick technical discovery.</p>
-        </div>
-        <div class="calendly-inline-widget" data-url="https://calendly.com/unixgigi/15-minutes-meeting" style="min-width:320px;height:700px;"></div>
+      <div class="f-card">
+        <div class="f-icon">⚙️</div>
+        <h3>Operations Ops</h3>
+        <p>Streamline internal workflows and reduce manual overhead. Let your team focus on high-value tasks.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🎧</div>
+        <h3>Support Efficiency</h3>
+        <p>Optimize Customer Support processes and tooling to improve response times and team productivity.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">🤖</div>
+        <h3>Process Automation</h3>
+        <p>Connect your entire stack (CRM, Product, Ops) via custom workflows for 100% data integrity.</p>
       </div>
     </div>
   </section>
 
   <section id="contact" class="contact-section">
     <div class="container">
+      <div class="form-header">
+        <h2>Get in touch</h2>
+        <p>Have a specific project in mind? Drop me a line.</p>
+      </div>
+      
       <div class="form-container">
-        <div class="form-header">
-          <h2>Get in touch</h2>
-          <p>Have a specific project in mind? Drop me a line.</p>
-        </div>
         <form id="contactForm" class="modern-form">
-          <div class="input-grid">
+          <div class="input-row">
             <div class="group">
-              <label>Full Name</label>
-              <input type="text" name="name" id="name" placeholder="John Doe" required>
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required>
             </div>
             <div class="group">
-              <label>Work Email</label>
-              <input type="email" name="email" id="email" placeholder="john@company.com" required>
+              <label for="email">Work Email</label>
+              <input type="email" id="email" name="email" placeholder="john@company.com" required>
             </div>
           </div>
           <div class="group">
-            <label>Company</label>
-            <input type="text" name="company" id="company" placeholder="SaaS Inc.">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="SaaS Inc.">
           </div>
           <div class="group">
-            <label>Message</label>
-            <textarea name="message" id="message" rows="4" placeholder="How can I help you?" required></textarea>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="How can I help you?" required></textarea>
           </div>
-          <input type="text" name="website" id="website" style="display:none" tabindex="-1">
+          
+          <input type="text" id="website" name="website" style="display:none" tabindex="-1">
           <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+          
           <button type="submit" class="btn-submit">Send Message</button>
           <div id="formStatus" class="form-status"></div>
         </form>
@@ -111,9 +94,9 @@
   </section>
 
   <footer class="footer">
-    <div class="container footer-content">
+    <div class="container">
       <div class="logo light">LUIGI<span>COPERTINO</span></div>
-      <p>&copy; 2026 Luigi Copertino. Product Operations Consultant.</p>
+      <p class="footer-copy">&copy; 2026 Luigi Copertino. Product Operations Consultant.</p>
       <div class="footer-links">
         <a href="https://www.linkedin.com/in/luigi-copertino/" target="_blank">LinkedIn</a>
         <a href="#">Privacy Policy</a>
