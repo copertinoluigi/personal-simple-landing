@@ -3,8 +3,8 @@ const CONFIG = {
   N8N_WEBHOOK: "https://lab.ai4u.it/webhook/luigi-contact"
 };
 
-// Calendly
-function openCalendly() {
+function openCalendly(e) {
+  if (e) e.preventDefault();
   if (window.Calendly) {
     window.Calendly.initPopupWidget({ url: CONFIG.CALENDLY_URL });
   } else {
@@ -14,22 +14,19 @@ function openCalendly() {
 
 document.getElementById("bookCallTop").addEventListener("click", openCalendly);
 
-// Form Handling
 const contactForm = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
 
 contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  
   const submitBtn = e.target.querySelector('button');
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData.entries());
 
-  // Bot check
-  if (data.website) return;
+  if (data.website) return; // Honeypot
 
   submitBtn.disabled = true;
-  status.textContent = "Sending your message...";
+  status.textContent = "Sending message...";
   status.style.color = "var(--text)";
 
   try {
@@ -44,15 +41,14 @@ contactForm.addEventListener("submit", async (e) => {
     });
 
     if (response.ok) {
-      status.textContent = "Message sent! I'll be in touch soon.";
-      status.style.color = "var(--accent)";
+      status.textContent = "Success! I'll get back to you shortly.";
+      status.style.color = "#10b981";
       contactForm.reset();
-      if (window.turnstile) window.turnstile.reset();
     } else {
       throw new Error();
     }
   } catch (err) {
-    status.textContent = "Error sending message. Please try Calendly.";
+    status.textContent = "Error. Please try booking a call instead.";
     status.style.color = "#ef4444";
   } finally {
     submitBtn.disabled = false;
