@@ -1,60 +1,63 @@
-const CONFIG = {
-  CALENDLY_URL: "https://calendly.com/unixgigi/15-minutes-meeting",
-  N8N_WEBHOOK: "https://lab.ai4u.it/webhook/luigi-contact"
-};
-
-// Calendly
-function openCalendly() {
-  if (window.Calendly) {
-    window.Calendly.initPopupWidget({ url: CONFIG.CALENDLY_URL });
-  } else {
-    window.open(CONFIG.CALENDLY_URL, '_blank');
-  }
+:root {
+  --bg: #F8FAFC;
+  --white: #FFFFFF;
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  --radius: 12px;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
 }
 
-document.getElementById("bookCallTop").addEventListener("click", openCalendly);
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+  background-color: var(--bg); 
+  color: var(--text-main); 
+  line-height: 1.5;
+}
 
-// Form Handling
-const contactForm = document.getElementById("contactForm");
-const status = document.getElementById("formStatus");
+.container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
 
-contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  
-  const submitBtn = e.target.querySelector('button');
-  const formData = new FormData(contactForm);
-  const data = Object.fromEntries(formData.entries());
+/* Navigation */
+nav { padding: 32px 0; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
 
-  // Bot check
-  if (data.website) return;
+/* Hero */
+.hero { padding: 80px 0 100px; text-align: center; }
+.hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.03em; }
+.hero p { font-size: 1.125rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
 
-  submitBtn.disabled = true;
-  status.textContent = "Sending your message...";
-  status.style.color = "var(--text)";
+/* Buttons */
+.btn { 
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 16px 32px; border-radius: 9999px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s ease; border: none; font-size: 1rem;
+}
+.btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+.btn-secondary { background: white; border: 1px solid var(--border); color: var(--text-main); margin-left: 12px; }
+.btn-secondary:hover { border-color: #CBD5E1; background: #F1F5F9; }
 
-  try {
-    const response = await fetch(CONFIG.N8N_WEBHOOK, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...data,
-        source: "luigicopertino.it",
-        timestamp: new Date().toISOString()
-      }),
-    });
+/* Services Grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+.card { background: var(--white); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.card h3 { margin-bottom: 12px; font-size: 1.25rem; }
+.card p { color: var(--text-muted); font-size: 0.95rem; }
 
-    if (response.ok) {
-      status.textContent = "Message sent! I'll be in touch soon.";
-      status.style.color = "var(--accent)";
-      contactForm.reset();
-      if (window.turnstile) window.turnstile.reset();
-    } else {
-      throw new Error();
-    }
-  } catch (err) {
-    status.textContent = "Error sending message. Please try Calendly.";
-    status.style.color = "#ef4444";
-  } finally {
-    submitBtn.disabled = false;
-  }
-});
+/* Form Area */
+.contact-section { padding: 100px 0; }
+.form-box { max-width: 600px; margin: 0 auto; background: white; padding: 48px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.input-group { margin-bottom: 20px; }
+label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; }
+input, textarea { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+input:focus, textarea:focus { border-color: var(--primary); }
+#formStatus { margin-top: 16px; font-size: 0.875rem; font-weight: 500; }
+
+@media (max-width: 768px) {
+  .hero { padding: 60px 0; }
+  .btn-secondary { margin-left: 0; margin-top: 12px; width: 100%; }
+  .btn-primary { width: 100%; }
+  .form-box { padding: 24px; }
+}
