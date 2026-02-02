@@ -1,124 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luigi Copertino | Product Analytics & Ops Consultant</title>
-  <meta name="description" content="Operational excellence for mid-size companies.">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luigi Copertino | Product Analytics & Operations</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="container nav-flex">
-      <div class="logo">LUIGI<span>COPERTINO</span></div>
+  <div class="container">
+    <nav>
+      <div class="logo">Luigi Copertino</div>
       <div class="nav-cta">
-        <a href="#contact" class="btn-text">Contact</a>
-        <a href="#calendar" class="btn-nav">Book Call</a>
+        <a href="#contact" class="btn btn-secondary">Contact Me</a>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-badge">Available for Q2 2026</div>
-      <h1 class="hero-title">Optimize your <span>Product Operations</span> and Data Flow.</h1>
-      <p class="hero-subtitle">
-        I help mid-size companies automate reporting and build analytics systems that actually drive decisions. No fluff, just scalable infrastructure.
-      </p>
-      <div class="hero-btns">
-        <button class="btn-primary" id="bookCallTop">Book a 15-min Call</button>
-        <a href="#contact" class="btn-secondary">Send Message</a>
+    <header class="hero">
+      <h1>Operational Excellence for Mid-Size Companies</h1>
+      <p>I help organizations optimize internal processes, automate data workflows, and turn complex operations into streamlined growth engines.</p>
+      <div>
+        <button class="btn btn-primary" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/unixgigi/15-minutes-meeting'}); return false;">Book a 15-min Call</button>
+        <a href="#services" class="btn btn-secondary">Our Services</a>
       </div>
-    </div>
-  </section>
+    </header>
 
-  <section class="features">
-    <div class="container grid-3">
-      <div class="f-card">
-        <div class="f-icon">📊</div>
-        <h3>Analytics & Reporting</h3>
-        <p>Dashboards that surface metrics that matter. Stop hunting through spreadsheets.</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">⚙️</div>
-        <h3>Operations Ops</h3>
-        <p>Streamline workflows and reduce manual work. Let your team focus on high-value tasks.</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">🤖</div>
-        <h3>Process Automation</h3>
-        <p>Connect your stack (CRM, Ops, Product) via n8n/Custom APIs for 100% data accuracy.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="calendar" class="calendar-section">
-    <div class="container">
-      <div class="card-glass">
-        <div class="section-header">
-          <h2>Ready to scale?</h2>
-          <p>Choose a time that works for you. No sales pitch, just a quick technical discovery.</p>
+    <section id="services" style="padding: 60px 0;">
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 20px;">Core Expertise</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Product Analytics</h3>
+          <p>Moving beyond vanity metrics to implement tracking frameworks that drive actual product decisions and retention.</p>
         </div>
-        <!-- Calendly Inline Widget -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/unixgigi/15-minutes-meeting" style="min-width:320px;height:700px;"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <div class="form-container">
-        <div class="form-header">
-          <h2>Get in touch</h2>
-          <p>Have a specific project in mind? Drop me a line.</p>
+        <div class="card">
+          <h3>Operational Strategy</h3>
+          <p>Auditing and redesigning internal workflows to reduce friction, eliminate silos, and boost team output.</p>
         </div>
-        <form id="contactForm" class="modern-form">
-          <div class="input-grid">
-            <div class="group">
-              <label>Full Name</label>
-              <input type="text" name="name" id="name" placeholder="John Doe" required>
-            </div>
-            <div class="group">
-              <label>Work Email</label>
-              <input type="email" name="email" id="email" placeholder="john@company.com" required>
-            </div>
+        <div class="card">
+          <h3>Process Automation</h3>
+          <p>Connecting your tech stack to automate repetitive tasks, saving hours of manual work every week.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="form-box">
+        <h2 style="margin-bottom: 8px;">Let's discuss your operations</h2>
+        <p style="color: var(--text-muted); margin-bottom: 32px;">Ready to optimize your workflows? Send me a message below.</p>
+        
+        <form id="contactForm">
+          <div class="input-group">
+            <label>Name</label>
+            <input type="text" name="name" required placeholder="Your Name">
           </div>
-          <div class="group">
-            <label>Company</label>
-            <input type="text" name="company" id="company" placeholder="SaaS Inc.">
+          <div class="input-group">
+            <label>Email</label>
+            <input type="email" name="email" required placeholder="name@company.com">
           </div>
-          <div class="group">
+          <div class="input-group">
             <label>Message</label>
-            <textarea name="message" id="message" rows="4" placeholder="How can I help you?" required></textarea>
+            <textarea name="message" rows="4" required placeholder="How can I help your organization?"></textarea>
           </div>
-          
           <!-- Honeypot -->
-          <input type="text" name="website" id="website" style="display:none" tabindex="-1">
-
-          <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
-
-          <button type="submit" class="btn-submit">Send Message</button>
-          <div id="formStatus" class="form-status"></div>
+          <input type="text" name="_hp" style="display:none" tabindex="-1">
+          
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px;">Send Message</button>
+          <div id="formStatus"></div>
         </form>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="footer">
-    <div class="container footer-grid">
-      <p>&copy; 2026 Luigi Copertino. Product Operations Consultant.</p>
-      <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">LinkedIn</a>
-      </div>
-    </div>
-  </footer>
+    <footer style="padding: 40px 0; border-top: 1px solid var(--border); text-align: center;">
+      <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026 Luigi Copertino. All rights reserved.</p>
+    </footer>
+  </div>
 
-  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   <script src="script.js"></script>
 </body>
 </html>
