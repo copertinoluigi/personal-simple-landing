@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    expose:
+      - "80"
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.luigi.rule: "Host(`luigicopertino.it`) || Host(`www.luigicopertino.it`)"
+      traefik.http.routers.luigi.entrypoints: "web,websecure"
+      traefik.http.routers.luigi.tls: "true"
+      traefik.http.routers.luigi.tls.certresolver: "letsencrypt"
+      traefik.http.services.luigi.loadbalancer.server.port: "80"
